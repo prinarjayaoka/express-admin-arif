@@ -1,5 +1,6 @@
 def BRANCH_DEV = 'develop'
 def BRANCH_PROD = 'master'
+def APP = 'express-admin-arif'
 pipeline {
     agent any
 
@@ -15,7 +16,7 @@ pipeline {
                                     verbose: true,
                                     transfers: [
                                         sshTransfer(
-                                            execCommand: "git checkout master | git pull origin master",
+                                            execCommand: "cd ${APP} | git checkout master | git pull origin master",
                                             execTimeout: 120000,
                                         )
                                     ]
@@ -30,7 +31,7 @@ pipeline {
                                     verbose: true,
                                     transfers: [
                                         sshTransfer(
-                                            execCommand: "git checkout develop | git pull origin develop",
+                                            execCommand: "cd ${APP} | git checkout develop | git pull origin develop",
                                             execTimeout: 120000,
                                         )
                                     ]
@@ -53,7 +54,7 @@ pipeline {
                                     verbose: false,
                                     transfers: [
                                         sshTransfer(
-                                            execCommand: "npm install;",
+                                            execCommand: "cd ${APP} | npm install;",
                                             execTimeout: 120000,
                                         )
                                     ]
@@ -68,7 +69,7 @@ pipeline {
                                     verbose: false,
                                     transfers: [
                                         sshTransfer(
-                                            execCommand: "npm install;",
+                                            execCommand: "cd ${APP} | npm install;",
                                             execTimeout: 120000,
                                         )
                                     ]
@@ -91,7 +92,7 @@ pipeline {
                                     verbose: false,
                                     transfers: [
                                         sshTransfer(
-                                            execCommand: "sudo pm2 stop app.js | sudo pm2 start app.js;",
+                                            execCommand: "cd ${APP} | sudo pm2 stop app.js | sudo pm2 start app.js;",
                                             execTimeout: 120000,
                                         )
                                     ]
@@ -106,7 +107,7 @@ pipeline {
                                     verbose: false,
                                     transfers: [
                                         sshTransfer(
-                                            execCommand: "sudo pm2 stop app.js | sudo pm2 start app.js;",
+                                            execCommand: "cd ${APP} | sudo pm2 stop app.js | sudo pm2 start app.js;",
                                             execTimeout: 120000,
                                         )
                                     ]
