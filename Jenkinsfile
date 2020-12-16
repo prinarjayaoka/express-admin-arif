@@ -97,7 +97,7 @@ pipeline {
                                 )
                             ]
                         )
-                    } if (BRANCH_NAME == BRANCH_DEV) {
+                    } else if (BRANCH_NAME == BRANCH_DEV) {
                         sshPublisher(
                             publishers: [
                                 sshPublisherDesc(
@@ -113,8 +113,10 @@ pipeline {
                             ]
                         )
                     }
+                    
                 }
             }
+                
         }
     }
 }
