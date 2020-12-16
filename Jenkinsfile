@@ -14,7 +14,7 @@ pipeline {
                                     verbose: false,
                                     transfers: [
                                         sshTransfer(
-                                            execCommand: "git pull origin master; npm install;",
+                                            execCommand: "git checkout master; git pull origin master;",
                                             execTimeout: 120000,
                                         )
                                     ]
@@ -29,7 +29,45 @@ pipeline {
                                     verbose: false,
                                     transfers: [
                                         sshTransfer(
-                                            execCommand: "git pull origin develop; npm install;",
+                                            execCommand: "git checkout develop; git pull origin develop;",
+                                            execTimeout: 120000,
+                                        )
+                                    ]
+                                ),
+                            ]
+                        )
+                    }
+                    
+                }
+            }
+        }
+        stage('Install Package') {
+            steps {
+                script {
+                    if (BRANCH_NAME == BRANCH_PROD) {
+                        sshPublisher(
+                            publishers: [
+                                sshPublisherDesc(
+                                    configName: 'production',
+                                    verbose: false,
+                                    transfers: [
+                                        sshTransfer(
+                                            execCommand: "npm install;",
+                                            execTimeout: 120000,
+                                        )
+                                    ]
+                                )
+                            ]
+                        )
+                    } else if (BRANCH_NAME == BRANCH_DEV) {
+                        sshPublisher(
+                            publishers: [
+                                sshPublisherDesc(
+                                    configName: 'development',
+                                    verbose: false,
+                                    transfers: [
+                                        sshTransfer(
+                                            execCommand: "npm install;",
                                             execTimeout: 120000,
                                         )
                                     ]
@@ -52,7 +90,7 @@ pipeline {
                                     verbose: false,
                                     transfers: [
                                         sshTransfer(
-                                            execCommand: "sudo pm2 restart 0",
+                                            execCommand: "sudo pm2 stop app.js; sudo pm2 start app.js;",
                                             execTimeout: 120000,
                                         )
                                     ]
@@ -67,7 +105,7 @@ pipeline {
                                     verbose: false,
                                     transfers: [
                                         sshTransfer(
-                                            execCommand: "sudo pm2 restart 0",
+                                            execCommand: "sudo pm2 stop app.js; sudo pm2 start app.js;",
                                             execTimeout: 120000,
                                         )
                                     ]
