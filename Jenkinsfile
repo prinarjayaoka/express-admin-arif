@@ -12,7 +12,7 @@ pipeline {
                             publishers: [
                                 sshPublisherDesc(
                                     configName: 'production',
-                                    verbose: false,
+                                    verbose: true,
                                     transfers: [
                                         sshTransfer(
                                             execCommand: "git checkout master | git pull origin master",
@@ -27,7 +27,7 @@ pipeline {
                             publishers: [
                                 sshPublisherDesc(
                                     configName: 'development',
-                                    verbose: false,
+                                    verbose: true,
                                     transfers: [
                                         sshTransfer(
                                             execCommand: "git checkout develop | git pull origin develop",
