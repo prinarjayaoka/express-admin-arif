@@ -14,7 +14,7 @@ pipeline {
                                     verbose: false,
                                     transfers: [
                                         sshTransfer(
-                                            execCommand: "git pull origin master",
+                                            execCommand: "git pull origin master; npm install;",
                                             execTimeout: 120000,
                                         )
                                     ]
@@ -29,7 +29,7 @@ pipeline {
                                     verbose: false,
                                     transfers: [
                                         sshTransfer(
-                                            execCommand: "git pull origin develop",
+                                            execCommand: "git pull origin develop; npm install;",
                                             execTimeout: 120000,
                                         )
                                     ]
