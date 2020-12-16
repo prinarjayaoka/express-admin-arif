@@ -2,7 +2,7 @@ def BRANCH_DEV = 'develop'
 def BRANCH_PROD = 'master'
 pipeline {
     agent any
-    
+
     stages {
         stage('Update Project') {
             steps {
@@ -15,7 +15,7 @@ pipeline {
                                     verbose: false,
                                     transfers: [
                                         sshTransfer(
-                                            execCommand: "git checkout master; git pull origin master;",
+                                            execCommand: "git checkout master | git pull origin master",
                                             execTimeout: 120000,
                                         )
                                     ]
@@ -30,7 +30,7 @@ pipeline {
                                     verbose: false,
                                     transfers: [
                                         sshTransfer(
-                                            execCommand: "git checkout develop; git pull origin develop;",
+                                            execCommand: "git checkout develop | git pull origin develop",
                                             execTimeout: 120000,
                                         )
                                     ]
@@ -91,7 +91,7 @@ pipeline {
                                     verbose: false,
                                     transfers: [
                                         sshTransfer(
-                                            execCommand: "sudo pm2 stop app.js; sudo pm2 start app.js;",
+                                            execCommand: "sudo pm2 stop app.js | sudo pm2 start app.js;",
                                             execTimeout: 120000,
                                         )
                                     ]
@@ -106,7 +106,7 @@ pipeline {
                                     verbose: false,
                                     transfers: [
                                         sshTransfer(
-                                            execCommand: "sudo pm2 stop app.js; sudo pm2 start app.js;",
+                                            execCommand: "sudo pm2 stop app.js | sudo pm2 start app.js;",
                                             execTimeout: 120000,
                                         )
                                     ]
